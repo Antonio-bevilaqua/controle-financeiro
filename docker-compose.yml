@@ -112,6 +112,8 @@ services:
     volumes:
       - /var/www/frontend/node_modules
       - ./frontend:/var/www/frontend
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
     networks:
       - rede
 
