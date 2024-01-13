@@ -96,45 +96,64 @@ services:
     networks:
       - rede
 
+  #frontend:
+  #  build:
+  #    dockerfile: frontend/Dockerfile
+  #  image: estudosdev/frontend
+  #  container_name: frontend
+  #  restart: unless-stopped
+  #  tty: true
+  #  ports:
+  #    - "3000:3000"
+  #  depends_on:
+  #    - phpapi
+  #  extra_hosts:
+  #    - "host.docker.internal:host-gateway"
+  #  volumes:
+  #    - /var/www/frontend/node_modules
+  #    - ./frontend:/var/www/frontend
+  #  environment:
+  #    CHOKIDAR_USEPOLLING: "true"
+  #  networks:
+  #    - rede
+
   frontend:
     build:
       dockerfile: frontend/Dockerfile
-    image: estudosdev/frontend
+    image: estudosdev/frontweb
     container_name: frontend
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3000:3000"
-    depends_on:
-      - phpapi
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    volumes:
-      - /var/www/frontend/node_modules
-      - ./frontend:/var/www/frontend
-    environment:
-      CHOKIDAR_USEPOLLING: "true"
-    networks:
-      - rede
-
-  webserver:
-    build:
-      dockerfile: webserver/Dockerfile
-    image: estudosdev/webserver
-    container_name: webserver
     restart: unless-stopped
     tty: true
     ports:
       - "80:80"
       - "443:443"
       - "8000:8000"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    depends_on:
+      - phpapi
     volumes:
       - ./phpapi:/var/www/phpapi
       - ./frontend:/var/www/frontend
     networks:
       - rede
+
+  #webserver:
+  #  build:
+  #    dockerfile: webserver/Dockerfile
+  #  image: estudosdev/webserver
+  #  container_name: webserver
+  #  restart: unless-stopped
+  #  tty: true
+  #  ports:
+  #    - "80:80"
+  #    - "443:443"
+  #    - "8000:8000"
+  #  extra_hosts:
+  #    - "host.docker.internal:host-gateway"
+  #  volumes:
+  #    - ./phpapi:/var/www/phpapi
+  #    - ./frontend:/var/www/frontend
+  #  networks:
+  #    - rede
 
 networks:
   rede:
