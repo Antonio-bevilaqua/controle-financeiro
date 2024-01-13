@@ -1,0 +1,143 @@
+version: "3.8"
+services:
+  phpapi:
+    build:
+      args:
+        user: phpapi
+        uid: 1000
+      context: ./
+      dockerfile: phpapi/Dockerfile
+    image: estudosdev/apiphp
+    container_name: api-php
+    restart: unless-stopped
+    working_dir: /var/www/phpapi
+    env_file: .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    volumes:
+      - ./phpapi:/var/www/phpapi
+      - ./phpapi/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ./phpapi/.env:/var/www/phpapi/.env
+    entrypoint: [ 'php-fpm' ]
+    networks:
+      - rede
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    command: redis-server --appendonly yes --requirepass "${REDIS_PASSWORD}"
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    volumes:
+      - ./phpapi/data/redis:/data
+    ports:
+      - 6382:6379
+    networks:
+      - rede
+
+  laravel-queue:
+    build:
+      context: ./
+      dockerfile: phpapi/Dockerfile
+      args:
+        user: phpapi
+        uid: 1000
+    container_name: laravel-queue
+    image: estudosdev/queuephp
+    depends_on:
+      - mysql
+    working_dir: /var/www/phpapi
+    entrypoint: [ 'php', '/var/www/phpapi/artisan', 'workers:listener' ]
+    #production entrypoint: ['php', '/var/www/phpapi/artisan', 'queue:work']
+    volumes:
+      - ./phpapi:/var/www/phpapi
+      - ./phpapi/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ./phpapi/.env:/var/www/phpapi/.env
+    networks:
+      - rede
+
+  mysql:
+    image: mysql:8.2.0
+    container_name: mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - rede
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.0
+    container_name: phpmyadmin
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: ${DB_HOST}
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+      PMA_PORT: ${DB_PORT}
+    depends_on:
+      - mysql
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - 8888:80
+    networks:
+      - rede
+
+  frontend:
+    build:
+      dockerfile: frontend/Dockerfile
+    image: estudosdev/frontend
+    container_name: frontend
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - phpapi
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - /var/www/frontend/node_modules
+      - ./frontend:/var/www/frontend
+    networks:
+      - rede
+
+  webserver:
+    build:
+      dockerfile: webserver/Dockerfile
+    image: estudosdev/webserver
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8000:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./phpapi:/var/www/phpapi
+      - ./frontend:/var/www/frontend
+    networks:
+      - rede
+
+networks:
+  rede:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
