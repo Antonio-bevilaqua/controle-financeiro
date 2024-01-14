@@ -26,6 +26,32 @@ services:
     networks:
       - rede
 
+  nodeapi:
+    build:
+      args:
+        user: nodeapi
+        uid: 1000
+      context: ./
+      dockerfile: nodeapi/Dockerfile
+    image: estudosdev/apinode
+    container_name: api-node
+    ports:
+      - "3333:3333"
+    restart: unless-stopped
+    working_dir: /var/www/nodeapi
+    env_file: .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    volumes:
+      - ./nodeapi:/var/www/nodeapi
+      - ./nodeapi/.env:/var/www/nodeapi/.env
+    networks:
+      - rede
+
   redis:
     image: redis:alpine
     container_name: redis
