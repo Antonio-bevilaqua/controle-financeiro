@@ -1,4 +1,7 @@
 import './index.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLock} from '@fortawesome/free-solid-svg-icons'
+import { faUser } from '@fortawesome/free-regular-svg-icons'
 
 export default function Login() {
     return(
@@ -22,15 +25,17 @@ export default function Login() {
 
                     <div className="containerBotoesLogin">
 
-                        <button>
-                            <img src="../../assets/cadeado.svg" alt="" /> Log in
-                        </button>
-
-                        <button className="botaoSecundarioLogin"> Criar conta
-                        </button>
-
-                        <button className="botaoSecundarioLogin"> Esqueci a senha
-                        </button>
+                        <div>
+                            <FontAwesomeIcon icon={faLock} />
+                            <p>Log in</p>
+                        </div>
+                        <div className="botaoSecundarioLogin"> 
+                            <FontAwesomeIcon icon={faUser} />
+                            <p>Criar conta</p>
+                        </div>
+                        <div className="botaoSecundarioLogin"> 
+                            <p>Esqueci a senha</p>
+                        </div>
                         
                     </div>
                 </div>
