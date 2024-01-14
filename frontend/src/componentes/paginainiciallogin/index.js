@@ -14,25 +14,27 @@ export default function Login() {
                     <h1 className="tituloLogin"> Logar </h1>
 
                     <div className="campoNomeLogin">
-                        <label htmlFor=""> Nome </label>
+                        <label htmlFor=""> <p>Nome</p> </label>
                         <input type="text" />
                     </div>
 
                     <div className="campoSenhaLogin">
-                        <label htmlFor=""> Senha </label>
+                        <label htmlFor=""> <p>Senha</p> </label>
                         <input type="password" />
                     </div>
 
                     <div className="containerBotoesLogin">
 
-                        <div>
+                        <div  className="botaoPrimarioLogin">
                             <FontAwesomeIcon icon={faLock} />
                             <p>Log in</p>
                         </div>
+
                         <div className="botaoSecundarioLogin"> 
                             <FontAwesomeIcon icon={faUser} />
                             <p>Criar conta</p>
                         </div>
+
                         <div className="botaoSecundarioLogin"> 
                             <p>Esqueci a senha</p>
                         </div>
