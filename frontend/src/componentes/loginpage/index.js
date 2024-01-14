@@ -1,52 +1,66 @@
 import './index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { faLock, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserContextProvider';
 
-export default function Login({Validation, setValidation}) {
-
-    const [ User, setUser ] = useState("");
-    const [ Password, setPassword ] = useState("");
+export default function Login() {
+    const context = useContext(UserContext);
+    const [User, setUser] = useState("");
+    const [Password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const checkValidation = () => {
-        
-        if(User === "Liza Silva" && Password === "123456") {
-            setValidation(!Validation);
-            navigate('/home');
-        }else {
-            alert("E-mail ou senha não cadastrados.")
-        }
+    const checkValidation = async () => {
+        setLoading(true);
+        await context.login(User, Password);
+
+        setLoading(false);
     }
 
-    return(
+    useEffect(() => {
+        if (context.isLoggedIn()) {
+            navigate('/home');
+        }
+    }, [context.user, context.token]);
+
+    return (
         <main className="container">
             <div className="containerCardLogin">
                 <h1 className="tituloLogin"> Logar </h1>
                 <div className="containerLabelInputLogin">
                     <label htmlFor="usuario">Usuario</label>
-                    <input type="text" name='usuario' id='usuario' value={User} onChange={(e)=> setUser(e.target.value)} />
+                    <input type="text" name='usuario' id='usuario' value={User} onChange={(e) => setUser(e.target.value)} />
                 </div>
                 <div className="containerLabelInputLogin">
                     <label htmlFor="password">Senha</label>
-                    <input type="password" name='password' id='password' value={Password} onChange={(e)=> setPassword(e.target.value)} />
+                    <input type="password" name='password' id='password' value={Password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div className="containerBotoesLogin">
-                    <div onClick={ checkValidation } className="botaoLogin" id='botaoPrimarioLogin'>
-                        <FontAwesomeIcon icon={faLock} />
-                        <p>Log in</p>
+                    <div onClick={checkValidation} className="botaoLogin" disabled={loading} id='botaoPrimarioLogin'>
+                        {loading ? (
+                            <>
+                                <FontAwesomeIcon icon={faSpinner} spin />
+                                <p>Log in</p>
+                            </>
+                        ) : (
+                            <>
+                                <FontAwesomeIcon icon={faLock} />
+                                <p>Log in</p>
+                            </>
+                        )}
                     </div>
                     <div id='dimensionamentoBotao'>
-                        <div onClick={ () => navigate('/register') } className="botaoLogin">
+                        <div onClick={() => navigate('/register')} className="botaoLogin">
                             <p>Criar conta</p>
                         </div>
-                        <div onClick={ () => navigate('/forgot-password')} className="botaoLogin">
+                        <div onClick={() => navigate('/forgot-password')} className="botaoLogin">
                             <p>Esqueci a senha</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
+        </main >
     );
 }

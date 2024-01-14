@@ -4,9 +4,9 @@ WORKDIR /var/www/frontend
 
 COPY frontend/ .
 
-RUN yarn install
+RUN npm install
 
-RUN yarn build
+RUN npm run build
 
 FROM nginx:latest as prod
 
