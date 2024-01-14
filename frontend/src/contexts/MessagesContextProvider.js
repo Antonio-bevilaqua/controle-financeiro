@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import './message.css';
 
 export const MessagesContext = React.createContext({
     showMessage: () => { }
@@ -9,7 +10,7 @@ const MessagesContextProvider = ({ children }) => {
     const [type, setType] = useState('');
     const [alert, setAlert] = useState(false);
 
-    const showMessage = (messages, type = 'error', timeout = 3000) => {
+    const showMessage = (messages, type = 'error', timeout = 30000) => {
         setMessages(messages);
         setAlert(true);
         setType(type);
@@ -25,12 +26,11 @@ const MessagesContextProvider = ({ children }) => {
         <>
             <div>
                 {Object.keys(messages).length > 0 && alert && (
-                    <>
-                        <div>MODAL VAI AQUI JÁ ABERTO</div>
+                    <div id='Alert'>
                         {Object.keys(messages).map((key, id) => (
                             <div key={'msg' + id}>{messages[key]}</div>
                         ))}
-                    </>
+                    </div>
                 )}
             </div>
             <MessagesContext.Provider

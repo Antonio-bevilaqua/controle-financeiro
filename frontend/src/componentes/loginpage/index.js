@@ -12,6 +12,17 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    const ValidUser = () => {
+        const regex = /^[a-zA-Z0-9]+$/;
+        const isValid = regex.test(User) && User.length >= 3 && User.length < 16;
+        return isValid;
+    }
+    const ValidPassword = () => {
+        const regex = /^[a-zA-Z0-9]+$/;
+        const isValid = regex.test(Password) && Password.length >= 8 && Password.length < 16;
+        return isValid;
+    }
+
     const checkValidation = async () => {
         setLoading(true);
         await context.login(User, Password);
@@ -25,17 +36,20 @@ export default function Login() {
         }
     }, [context.user, context.token]);
 
+    var UserChecker = ValidUser() ? 'Valido' : 'Invalido' ;
+    var PasswordChecker = ValidPassword() ? 'Valido' : 'Invalido' ;
+
     return (
         <main className="container">
             <div className="containerCardLogin">
                 <h1 className="tituloLogin"> Logar </h1>
-                <div className="containerLabelInputLogin">
+                <div className="containerLabelInputLogin" >
                     <label htmlFor="usuario">Usuario</label>
-                    <input type="text" name='usuario' id='usuario' value={User} onChange={(e) => setUser(e.target.value)} />
+                    <input className={`${UserChecker}`} type="text" name='usuario' id={`usuario`} value={User} onChange={(e) => setUser(e.target.value)} minLength={3} maxLength={15} />
                 </div>
                 <div className="containerLabelInputLogin">
                     <label htmlFor="password">Senha</label>
-                    <input type="password" name='password' id='password' value={Password} onChange={(e) => setPassword(e.target.value)} />
+                    <input className={`${PasswordChecker}`} type="password" name='password' id='password' value={Password} onChange={(e) => setPassword(e.target.value)} minLength={8} maxLength={15} />
                 </div>
                 <div className="containerBotoesLogin">
                     <div onClick={checkValidation} className="botaoLogin" disabled={loading} id='botaoPrimarioLogin'>

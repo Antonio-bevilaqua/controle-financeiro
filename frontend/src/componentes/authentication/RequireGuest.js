@@ -19,4 +19,4 @@ const RequireGuest = ({ children }) => {
     )
 }
 
-export default RequireGuest
+export default RequireGuest;
