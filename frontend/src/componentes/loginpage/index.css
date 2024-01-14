@@ -71,6 +71,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 1rem;
+    cursor: pointer;
 }
 
 #botaoPrimarioLogin {
