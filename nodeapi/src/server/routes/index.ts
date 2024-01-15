@@ -8,5 +8,6 @@ router.get('/', (_, res) => {
 });
 
 router.get('/transactions', TransactionsController.getAllValidation, TransactionsController.getAll);
+router.get('/transactions/:id', TransactionsController.getByIdValidation, TransactionsController.getById);
 
 export { router };
