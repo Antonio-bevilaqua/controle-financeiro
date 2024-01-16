@@ -10,5 +10,6 @@ router.get('/', (_, res) => {
 router.get('/transactions', TransactionsController.getAllValidation, TransactionsController.getAll);
 router.get('/transactions/:id', TransactionsController.getByIdValidation, TransactionsController.getById);
 router.post('/transactions', TransactionsController.createValidation, TransactionsController.create);
+router.put('/transactions/:id', TransactionsController.updateByIdValidation, TransactionsController.updateById);
 
 export { router };

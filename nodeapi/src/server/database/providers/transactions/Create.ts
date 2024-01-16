@@ -16,7 +16,7 @@ export const create = async(transactions: Omit<ITransactions, 'id' | 'created_at
       return id;
     }
 
-    return new Error('erro teste');
+    return new Error('Erro ao cadastrar o resistro');
   } catch (error) {
     return new Error('Erro ao cadastrar o resistro');
   }
