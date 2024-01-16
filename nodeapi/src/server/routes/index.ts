@@ -11,5 +11,6 @@ router.get('/transactions', TransactionsController.getAllValidation, Transaction
 router.get('/transactions/:id', TransactionsController.getByIdValidation, TransactionsController.getById);
 router.post('/transactions', TransactionsController.createValidation, TransactionsController.create);
 router.put('/transactions/:id', TransactionsController.updateByIdValidation, TransactionsController.updateById);
+router.delete('/transactions/:id', TransactionsController.deleteByIdValidation, TransactionsController.deleteById);
 
 export { router };
