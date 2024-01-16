@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 
 interface IjwtData {
-  uid: number;
+  id: number;
 }
 
 const sign = (data: IjwtData): string | 'JWT_SECRET_NOT_FOUND' => {
