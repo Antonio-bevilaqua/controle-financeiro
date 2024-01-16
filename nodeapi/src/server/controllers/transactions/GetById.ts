@@ -3,25 +3,31 @@ import * as yup from 'yup';
 import { StatusCodes } from 'http-status-codes';
 
 import { validation } from '../../shared/middleware';
-import { ITransactions } from '../../database/models';
 import { TransactionsProvider } from '../../database/providers/transactions';
 
 interface IParamProps {
   id?: string;
 }
 
-interface IBodyProps extends Omit<ITransactions,  'id' | 'type' | 'description' | 'value' | 'date' | 'created_at' | 'updated_at'>{}
-
 export const getByIdValidation = validation((getSchema) => ({
-  body: getSchema<IBodyProps>(yup.object().shape({
-    user_id: yup.string().optional().default(''),
-  })),
   params: getSchema<IParamProps>(yup.object().shape({
     id: yup.string().required(),
   })),
 }));
 
-export const getById = async (req: Request<IParamProps, {}, IBodyProps>, res: Response) => {
+export const getById = async (req: Request<IParamProps>, res: Response) => {
+  const headerValue_user_id = req.headers['user_id'];
+  
+  if (!headerValue_user_id) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      errors: {
+        default: 'Você precisa enviar um token'
+      }
+    });
+  }
+
+  const user_id = Array.isArray(headerValue_user_id) ? headerValue_user_id[0] : headerValue_user_id;
+
   if (!req.params.id){
     return res.status(StatusCodes.BAD_REQUEST).json({
       errors: {
@@ -30,7 +36,7 @@ export const getById = async (req: Request<IParamProps, {}, IBodyProps>, res: Re
     });
   }
 
-  const result = await TransactionsProvider.getById(req.params.id, req.body.user_id);
+  const result = await TransactionsProvider.getById(req.params.id, user_id);
 
   if (result instanceof Error){
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

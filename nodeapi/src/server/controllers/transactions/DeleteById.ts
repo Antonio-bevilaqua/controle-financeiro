@@ -16,6 +16,18 @@ export const deleteByIdValidation = validation((getSchema) => ({
 }));
 
 export const deleteById = async (req: Request<IParamProps>, res: Response) => {
+  const headerValue_user_id = req.headers['user_id'];
+  
+  if (!headerValue_user_id) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      errors: {
+        default: 'Você precisa enviar um token'
+      }
+    });
+  }
+
+  const user_id = Array.isArray(headerValue_user_id) ? headerValue_user_id[0] : headerValue_user_id;
+
   if (!req.params.id) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       errors: {
@@ -24,7 +36,7 @@ export const deleteById = async (req: Request<IParamProps>, res: Response) => {
     });
   }
 
-  const result = await TransactionsProvider.deleteById(req.params.id);
+  const result = await TransactionsProvider.deleteById(req.params.id, user_id);
 
   if (result instanceof Error){
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
