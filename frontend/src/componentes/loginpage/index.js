@@ -34,7 +34,7 @@ export default function Login() {
         if (context.isLoggedIn()) {
             navigate('/home');
         }
-    }, [context.user, context.token]);
+    }, [context.user, context.token, context, navigate]);
 
     var UserChecker = ValidUser() ? 'Valido' : 'Invalido' ;
     var PasswordChecker = ValidPassword() ? 'Valido' : 'Invalido' ;
