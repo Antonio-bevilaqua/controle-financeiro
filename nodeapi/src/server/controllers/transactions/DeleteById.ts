@@ -9,13 +9,13 @@ interface IParamProps {
   id?: string;
 }
 
-export const getByIdValidation = validation((getSchema) => ({
+export const deleteByIdValidation = validation((getSchema) => ({
   params: getSchema<IParamProps>(yup.object().shape({
     id: yup.string().required(),
   })),
 }));
 
-export const getById = async (req: Request<IParamProps>, res: Response) => {
+export const deleteById = async (req: Request<IParamProps>, res: Response) => {
   const headerValue_user_id = req.headers['user_id'];
   
   if (!headerValue_user_id) {
@@ -28,7 +28,7 @@ export const getById = async (req: Request<IParamProps>, res: Response) => {
 
   const user_id = Array.isArray(headerValue_user_id) ? headerValue_user_id[0] : headerValue_user_id;
 
-  if (!req.params.id){
+  if (!req.params.id) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       errors: {
         default: 'O parâmetro "id" precisa ser informado.'
@@ -36,7 +36,7 @@ export const getById = async (req: Request<IParamProps>, res: Response) => {
     });
   }
 
-  const result = await TransactionsProvider.getById(req.params.id, user_id);
+  const result = await TransactionsProvider.deleteById(req.params.id, user_id);
 
   if (result instanceof Error){
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -46,5 +46,5 @@ export const getById = async (req: Request<IParamProps>, res: Response) => {
     });
   }
 
-  return res.status(StatusCodes.OK).json(result);
+  return res.status(StatusCodes.NO_CONTENT).send();
 };
