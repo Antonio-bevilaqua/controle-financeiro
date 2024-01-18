@@ -43,7 +43,7 @@ export default function ForgotPassword() {
     return (
         <main className="container">
             <div className="containerCardLogin">
-                <h1 className="tituloLogin"> Esqueci a senha</h1>
+                <h1 className="tituloLogin"> Esquecie a senha</h1>
                 <div className="containerLabelInputLogin" >
                     <label htmlFor="usuario">Usuario</label>
                     <input className={`${UserChecker}`} type="text" name='usuario' id={`usuario`} value={User} onChange={(e) => setUser(e.target.value)} minLength={3} maxLength={15} />
@@ -68,10 +68,10 @@ export default function ForgotPassword() {
                     </div>
                     <div id='dimensionamentoBotao'>
                         <div onClick={() => navigate('/register')} className="botaoLogin">
-                            <p>Criar conta</p>
+                            <p>recuperar senha</p>
                         </div>
                         <div onClick={() => navigate('/forgot-password')} className="botaoLogin">
-                            <p>Esqueci a senha</p>
+                            <p>Esquecie a senha</p>
                         </div>
                     </div>
                 </div>
