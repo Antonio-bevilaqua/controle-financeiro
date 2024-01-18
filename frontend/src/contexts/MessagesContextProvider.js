@@ -7,13 +7,11 @@ export const MessagesContext = React.createContext({
 
 const MessagesContextProvider = ({ children }) => {
     const [messages, setMessages] = useState({});
-    const [type, setType] = useState('');
     const [alert, setAlert] = useState(false);
 
-    const showMessage = (messages, type = 'error', timeout = 30000) => {
+    const showMessage = ( timeout = 3000) => {
         setMessages(messages);
         setAlert(true);
-        setType(type);
 
 
         setTimeout(() => {
