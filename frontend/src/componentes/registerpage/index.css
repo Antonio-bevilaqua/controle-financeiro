@@ -1,0 +1,79 @@
+.containerCard {
+    min-height: 550px;
+    min-width: 300px;
+    width: 30%;
+    background-color: #fff;
+    opacity: 70%;
+    text-align: center;
+    height: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    border: 1px solid #000;
+    border-radius: 20px;
+}
+
+.containerLabelInputRegister {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    font-weight: bold;
+}
+
+.containerLabelInputRegister input {
+    width: 100%;
+    max-height: 35px;
+    border-radius: 10px;
+    border: 2px solid #505050;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.containerLabelInputRegister label {
+    margin-top: 0.4rem;
+}
+
+#espacamentoLabel {
+    width: 80%;
+}
+
+.containerBotoesRegister {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#botaoPrimarioRegister {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border-radius: 1rem;
+}
+
+#botaoVoltarRegister {
+    padding: 10px 30px;
+    border-radius: 1rem;
+}
+
+.botaoRegister {
+    background-color: #000;
+    color: #fff;
+    padding: 10px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.9s ease-in-out;
+}
