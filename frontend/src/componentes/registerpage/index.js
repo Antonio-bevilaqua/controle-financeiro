@@ -103,7 +103,7 @@ export default function Register() {
                             </>
                         )}
                     </div>
-                    <div id=''>
+                    <div>
                         <div onClick={() => navigate('/')} className="botaoRegister" id='botaoVoltarRegister'>
                             <p>Voltar</p>
                         </div>

@@ -63,6 +63,17 @@ const UserContextProvider = ({ children }) => {
 
         return response;
     }
+    const SendMail = async (ConfirmMail) => {
+        const response = await fetcher.post('php', 'login', {
+            email: ConfirmMail
+        });
+
+        if (response === null) {
+            return false;
+        }
+
+        return true;
+    }
 
     const saveUserAndToken = (user, token) => {
         localStorage.setItem('userData', JSON.stringify(user));
@@ -90,6 +101,7 @@ const UserContextProvider = ({ children }) => {
                 token,
                 setToken,
                 SignIn,
+                SendMail,
                 login,
                 logoff,
                 isLoggedIn
