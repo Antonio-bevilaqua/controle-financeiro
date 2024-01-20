@@ -9,6 +9,8 @@ use Carbon\Carbon;
 
 class ActivateAccount
 {
+    public User $user;
+
     public function execute(ActivateAccountDTO $accountDTO): void
     {
         $user = User::where(
@@ -26,5 +28,7 @@ class ActivateAccount
 
         $user->email_verified_at = Carbon::now()->format('Y-m-d H:i:s');
         $user->save();
+
+        $this->user = $user;
     }
 }

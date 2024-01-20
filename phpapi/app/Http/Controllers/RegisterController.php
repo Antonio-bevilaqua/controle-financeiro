@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ActivateAcccountRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ResendEmailRequest;
 use App\Http\Responses\ResponseGenerator;
 use App\Jobs\SendEmailJob;
 use App\Mail\UserRegistration;
 use App\Models\User;
+use App\UseCases\Auth\ActivateAccount\ActivateAccount;
+use App\UseCases\Auth\ActivateAccount\ActivateAccountDTO;
 use App\UseCases\Auth\ActivateAccount\Exceptions\UserNotFoundException;
 use App\UseCases\Auth\CreateAccount\CreateAccount;
 use App\UseCases\Auth\CreateAccount\CreateAccountDTO;
@@ -36,6 +39,19 @@ class RegisterController extends BaseController
         return ResponseGenerator::make([
             'user' => $user
         ]);
+    }
+
+    public function activateAccount(
+        ActivateAcccountRequest $request,
+        ActivateAccount         $useCase,
+        ActivateAccountDTO      $activateAccountDTO,
+    ): JsonResponse
+    {
+        $activateAccountDTO->email_verification_token = $request->token ?? "";
+        $useCase->execute($activateAccountDTO);
+        return ResponseGenerator::make([
+            'user' => $useCase->user,
+        ], "Usuário ativado com sucesso!");
     }
 
     public function resendEmail(ResendEmailRequest $request): JsonResponse

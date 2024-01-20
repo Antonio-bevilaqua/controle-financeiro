@@ -23,6 +23,7 @@ Route::get('/', function () {
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'authenticate']);
 Route::post('/resend', [RegisterController::class, 'resendEmail']);
+Route::post('/activate', [RegisterController::class, 'activateAccount']);
 Route::prefix('password-reset')->group(function () {
     Route::post('/request', [ResetPasswordController::class, 'request']);
     Route::post('/change', [ResetPasswordController::class, 'changePassword']);
