@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './message.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle, faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export const MessagesContext = React.createContext({
     showMessage: () => { }
