@@ -48,6 +48,22 @@ const UserContextProvider = ({ children }) => {
         return true;
     }
 
+    const SignIn = async (NewName, NewUser, NewEmail, NewPassword, ConfirmPassword) => {
+        const response = await fetcher.post('php', 'login', {
+            name: NewName,
+            username: NewUser,
+            email: NewEmail,
+            password: NewPassword,
+            password_confirmation: ConfirmPassword
+        });
+
+        if (response === null) {
+            return false;
+        }
+
+        return response;
+    }
+
     const saveUserAndToken = (user, token) => {
         localStorage.setItem('userData', JSON.stringify(user));
         localStorage.setItem('token', JSON.stringify(token));
@@ -73,6 +89,7 @@ const UserContextProvider = ({ children }) => {
                 setUser,
                 token,
                 setToken,
+                SignIn,
                 login,
                 logoff,
                 isLoggedIn
