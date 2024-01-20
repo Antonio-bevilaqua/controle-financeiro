@@ -9,24 +9,24 @@ const useApiFetcher = () => {
     'node': "http://localhost:3333"
   };
 
-  const post = async (api, endpoint, data) => {
+  const post = async (api, endpoint, data, returnErrors = false) => {
     apiValidation(api);
     endpoint = endpoint[0] !== '/' ? "/" + endpoint : endpoint;
     try {
       const response = await axios.post(apis[api] + endpoint, data);
-      return formatResponse(response);
+      return formatResponse(response, returnErrors);
     } catch (error) {
       showMessage(formatErrors(error));
       return null;
     }
   }
 
-  const get = async (api, endpoint) => {
+  const get = async (api, endpoint, returnErrors = false) => {
     apiValidation(api);
     endpoint = endpoint[0] !== '/' ? "/" + endpoint : endpoint;
     try {
       const response = await axios.get(apis[api] + endpoint);
-      return formatResponse(response);
+      return formatResponse(response, returnErrors);
     } catch (error) {
       showMessage(formatErrors(error));
       return null;
@@ -41,12 +41,14 @@ const useApiFetcher = () => {
 
 
   const formatErrors = (error) => {
-    return error.response.data.data;
+    
+    return error.response?.data?.data ?? error;
   }
 
-  const formatResponse = (response) => {
+  const formatResponse = (response, returnErrors = false) => {
     const values = response.data;
     if (values.type !== 'success') {
+      if (returnErrors) return values;
       showMessage(formatErrors(values.data));
       return null;
     }
