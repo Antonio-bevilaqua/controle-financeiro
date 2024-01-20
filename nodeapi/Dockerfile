@@ -7,10 +7,10 @@ RUN mkdir -p /var/www/nodeapi/node_modules && chown -R node:node /var/www/nodeap
 WORKDIR /var/www/nodeapi
 COPY /nodeapi .
 
-RUN yarn install
+RUN npm install
 
 COPY --chown=node:node . .
 
 EXPOSE 3333
 
-CMD ["yarn", "production"]
+CMD ["npm", "run", "production"]
