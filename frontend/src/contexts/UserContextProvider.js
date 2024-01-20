@@ -49,7 +49,7 @@ const UserContextProvider = ({ children }) => {
     }
 
     const SignIn = async (NewName, NewUser, NewEmail, NewPassword, ConfirmPassword) => {
-        const response = await fetcher.post('php', 'login', {
+        const response = await fetcher.post('php', 'register', {
             name: NewName,
             username: NewUser,
             email: NewEmail,
@@ -64,7 +64,7 @@ const UserContextProvider = ({ children }) => {
         return response;
     }
     const SendMail = async (ConfirmMail) => {
-        const response = await fetcher.post('php', 'login', {
+        const response = await fetcher.post('php', 'password-reset/request', {
             email: ConfirmMail
         });
 

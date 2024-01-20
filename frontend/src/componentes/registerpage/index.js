@@ -85,8 +85,8 @@ export default function Register() {
                         <input className={`${PasswordChecker}`} type='password' name='newpassword' id={`newpassword`} value={NewPassword} onChange={(e) => setNewPassword(e.target.value)} minLength={8} maxLength={15}/>
                     </div>
                     <div className="containerLabelInputRegister">
-                        <label htmlFor="usuario">Confirmação de senha</label>
-                        <input  className={`${ConfirmPasswordChecker}`} type='password' name='newpassword' id={`newpassword`} value={ConfirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} minLength={8} maxLength={15} />
+                        <label htmlFor="ConfirmPassword">Confirmação de senha</label>
+                        <input  className={`${ConfirmPasswordChecker}`} type='password' name='ConfirmPassword' id={`ConfirmPassword`} value={ConfirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} minLength={8} maxLength={15} />
                     </div>
                 </div>
                 <div className="containerBotoesRegister">
