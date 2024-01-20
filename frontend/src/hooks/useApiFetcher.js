@@ -41,7 +41,6 @@ const useApiFetcher = () => {
 
 
   const formatErrors = (error) => {
-    
     return error.response?.data?.data ?? error;
   }
 
@@ -49,6 +48,7 @@ const useApiFetcher = () => {
     const values = response.data;
     if (values.type !== 'success') {
       if (returnErrors) return values;
+
       showMessage(formatErrors(values.data));
       return null;
     }
