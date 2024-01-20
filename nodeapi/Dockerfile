@@ -5,9 +5,12 @@ ARG user
 RUN mkdir -p /var/www/nodeapi/node_modules && chown -R node:node /var/www/nodeapi
 
 WORKDIR /var/www/nodeapi
-COPY /nodeapi .
+
+COPY /nodeapi/package.json .
 
 RUN npm install
+
+COPY /nodeapi .
 
 COPY --chown=node:node . .
 

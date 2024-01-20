@@ -5,6 +5,8 @@ import Register from '../componentes/registerpage';
 import ForgotPassword from '../componentes/forgotpasswordpage';
 import RequireLogin from '../componentes/authentication/RequireLogin';
 import RequireGuest from '../componentes/authentication/RequireGuest';
+import AccountCreatedPage from '../componentes/accountpendingvalidationpage';
+import AccountValidationPage from '../componentes/accountvalidationpage';
 
 function Rotas() {
     return (
@@ -25,6 +27,19 @@ function Rotas() {
                         <ForgotPassword />
                     </RequireGuest>
                 } />
+
+                <Route path='/account-pending-validation/:userId' element={
+                    <RequireGuest>
+                        <AccountCreatedPage />
+                    </RequireGuest>
+                } />
+
+                <Route path='/ativar-conta' element={
+                    <RequireGuest>
+                        <AccountValidationPage />
+                    </RequireGuest>
+                } />
+
 
                 <Route path='/home' element={
                     <RequireLogin>

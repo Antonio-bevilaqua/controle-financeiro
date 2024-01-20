@@ -47,7 +47,7 @@ export default function Register() {
         const response = await context.SignIn(NewName, NewUser, NewEmail, NewPassword, ConfirmPassword);
         setLoading(false);
         if(response !== false){
-            navigate("/confirmemail/"+response.id);
+            return navigate("/account-pending-validation/"+response.id);
         }
     }
 
