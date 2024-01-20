@@ -1,6 +1,6 @@
 import './index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelopeCircleCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContextProvider';
@@ -8,27 +8,22 @@ import { UserContext } from '../../contexts/UserContextProvider';
 
 export default function ForgotPassword() {
     const context = useContext(UserContext);
-    const [User, setUser] = useState("");
-    const [Password, setPassword] = useState("");
+    const [SendedMail, setSendedMail] = useState(false);
+    const [ConfirmMail, setConfirmMail] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const ValidUser = () => {
-        const regex = /^[a-zA-Z0-9]+$/;
-        const isValid = regex.test(User) && User.length >= 3 && User.length < 16;
-        return isValid;
-    }
-    const ValidPassword = () => {
-        const regex = /^[a-zA-Z0-9]+$/;
-        const isValid = regex.test(Password) && Password.length >= 8 && Password.length < 16;
+    const CoverEmail = () => {
+        const regex = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+.([a-z]+)+$/i;
+        const isValid = regex.test(ConfirmMail) && ConfirmMail.length >= 10 && ConfirmMail.length < 26;
         return isValid;
     }
 
-    const checkValidation = async () => {
+    const SendingMail = async () => {
         setLoading(true);
-        await context.login(User, Password);
-
+        const response = await context.SendMail(ConfirmMail);
         setLoading(false);
+        setSendedMail(response);
     }
 
     useEffect(() => {
@@ -37,45 +32,55 @@ export default function ForgotPassword() {
         }
     }, [context.user, context.token, context, navigate ]);
 
-    var UserChecker = ValidUser() ? 'Valido' : 'Invalido' ;
-    var PasswordChecker = ValidPassword() ? 'Valido' : 'Invalido' ;
+    
+    var EmailChecker = CoverEmail() ? 'Valido' : 'Invalido' ;
+    var BackCard = SendedMail ? 'Valido' : '' ;
 
     return (
-        <main className="container">
-            <div className="containerCardLogin">
-                <h1 className="tituloLogin"> Esquecie a senha</h1>
-                <div className="containerLabelInputLogin" >
-                    <label htmlFor="usuario">Usuario</label>
-                    <input className={`${UserChecker}`} type="text" name='usuario' id={`usuario`} value={User} onChange={(e) => setUser(e.target.value)} minLength={3} maxLength={15} />
-                </div>
-                <div className="containerLabelInputLogin">
-                    <label htmlFor="password">Senha</label>
-                    <input className={`${PasswordChecker}`} type="password" name='password' id='password' value={Password} onChange={(e) => setPassword(e.target.value)} minLength={8} maxLength={15} />
-                </div>
-                <div className="containerBotoesLogin">
-                    <div onClick={checkValidation} className="botaoLogin" disabled={loading} id='botaoPrimarioLogin'>
-                        {loading ? (
-                            <>
-                                <FontAwesomeIcon icon={faSpinner} spin />
-                                <p>Log in</p>
-                            </>
-                        ) : (
-                            <>
-                                <FontAwesomeIcon icon={faLock} />
-                                <p>Log in</p>
-                            </>
-                        )}
-                    </div>
-                    <div id='dimensionamentoBotao'>
-                        <div onClick={() => navigate('/register')} className="botaoLogin">
-                            <p>recuperar senha</p>
+        <main className={`container`}>
+            <div className="containerCardLogin"  id={`${BackCard}`}>
+                {!SendedMail ? (
+                    <>
+                        <h1 className="tituloLogin"> Recuperar Conta</h1>
+                        <div className="containerLabelInputLogin">
+                                <label htmlFor="email">E-mail</label>
+                                <input className={`${EmailChecker}`} type='email' name='email' id={`email`} value={ConfirmMail} onChange={(e) => setConfirmMail(e.target.value)} minLength={10} maxLength={25} />
+                            </div>
+                        <div className="containerBotoesLogin">
+                            <div onClick={SendingMail} className="botaoLogin" disabled={loading} id='botaoPrimarioLogin'>
+                                {loading ? (
+                                    <>
+                                        <FontAwesomeIcon icon={faSpinner} spin />
+                                        <p>Enviar Email</p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <FontAwesomeIcon icon={faEnvelopeCircleCheck} />
+                                        <p>Enviar Email</p>
+                                    </>
+                                )}
+                            </div>
+                            <div>
+                                <div onClick={() => navigate('/')} className="botaoLogin">
+                                    <p>Volta</p>
+                                </div>
+                            </div>
                         </div>
-                        <div onClick={() => navigate('/forgot-password')} className="botaoLogin">
-                            <p>Esquecie a senha</p>
-                        </div>
-                    </div>
-                </div>
+                    </>
+                ) : (
+                    <>
+                        <h1 className="tituloLogin" id='enviado'> E-mail enviado com sucesso</h1>
+                        <div className="containerBotoesLogin">
+                            <div>
+                                <div onClick={() => navigate('/')} className="botaoLogin">
+                                    <p>Volta</p>
+                                </div>
+                            </div>
+                        </div>                    
+                    </>
+                )}
             </div>
         </main >
+       
     );
 }
