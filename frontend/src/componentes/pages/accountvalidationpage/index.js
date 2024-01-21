@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faSignIn, faSpinner, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import useApiFetcher from '../../hooks/useApiFetcher';
+import useApiFetcher from '../../../hooks/useApiFetcher';
 
 
 export default function AccountValidationPage() {

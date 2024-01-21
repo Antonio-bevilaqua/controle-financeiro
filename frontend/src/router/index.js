@@ -1,12 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from '../componentes/loginpage';
-import Home from '../componentes/homepage';
-import Register from '../componentes/registerpage';
-import ForgotPassword from '../componentes/forgotpasswordpage';
-import RequireLogin from '../componentes/authentication/RequireLogin';
-import RequireGuest from '../componentes/authentication/RequireGuest';
-import AccountCreatedPage from '../componentes/accountpendingvalidationpage';
-import AccountValidationPage from '../componentes/accountvalidationpage';
+import Login from '../componentes/pages/loginpage';
+import Home from '../componentes/pages/homepage';
+import Register from '../componentes/pages/registerpage';
+import ForgotPassword from '../componentes/pages/forgotpasswordpage';
+import RequireLogin from '../componentes/pages/authentication/RequireLogin';
+import RequireGuest from '../componentes/pages/authentication/RequireGuest';
+import AccountCreatedPage from '../componentes/pages/accountpendingvalidationpage';
+import AccountValidationPage from '../componentes/pages/accountvalidationpage';
+import LogoffPage from '../componentes/pages/logoffpage';
 
 function Rotas() {
     return (
@@ -44,6 +45,12 @@ function Rotas() {
                 <Route path='/home' element={
                     <RequireLogin>
                         <Home />
+                    </RequireLogin>
+                } />
+
+                <Route path='/logoff' element={
+                    <RequireLogin>
+                        <LogoffPage />
                     </RequireLogin>
                 } />
 

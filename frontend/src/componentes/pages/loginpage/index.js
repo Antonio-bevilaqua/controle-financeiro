@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../contexts/UserContextProvider';
+import { UserContext } from '../../../contexts/UserContextProvider';
+import ApplicationLogo from '../../ApplicationLogo/ApplicationLogo';
 
 export default function Login() {
     const context = useContext(UserContext);
@@ -36,8 +37,8 @@ export default function Login() {
         }
     }, [context.user, context.token, context, navigate]);
 
-    var UserChecker = ValidUser() ? 'Valido' : 'Invalido' ;
-    var PasswordChecker = ValidPassword() ? 'Valido' : 'Invalido' ;
+    var UserChecker = ValidUser() ? 'Valido' : 'Invalido';
+    var PasswordChecker = ValidPassword() ? 'Valido' : 'Invalido';
 
     return (
         <main className="container">

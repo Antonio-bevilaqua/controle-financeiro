@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../contexts/UserContextProvider';
+import { UserContext } from '../../../contexts/UserContextProvider';
 
 export default function Register() {
 
