@@ -32,9 +32,9 @@ export default function AccountValidationPage() {
             return setErrors(response.data);
         }
     }
-
     useEffect(() => {
         sendValidationRequest();
+        // eslint-disable-next-line
     }, [])
 
     if (loading) return (
