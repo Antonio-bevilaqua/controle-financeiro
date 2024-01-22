@@ -12,6 +12,7 @@ const RequireGuest = ({ children }) => {
         if (context.isLoggedIn()) {
             navigate('/home');
         }
+        // eslint-disable-next-line
     }, [context.user, context.token]);
 
     if (!loaded) {

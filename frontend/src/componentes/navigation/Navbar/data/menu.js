@@ -1,4 +1,4 @@
-import { faCalculator, faCircleInfo, faCircleQuestion, faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
+import { faCalculator, faCircleInfo, faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
 
 export const menu = [
     {

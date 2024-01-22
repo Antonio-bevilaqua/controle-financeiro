@@ -4,7 +4,6 @@ import { faLock, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../contexts/UserContextProvider';
-import ApplicationLogo from '../../ApplicationLogo/ApplicationLogo';
 
 export default function Login() {
     const context = useContext(UserContext);

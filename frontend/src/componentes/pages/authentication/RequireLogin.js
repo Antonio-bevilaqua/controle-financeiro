@@ -12,6 +12,7 @@ const RequireLogin = ({ children }) => {
         if (!context.isLoggedIn()) {
             navigate('/');
         }
+        // eslint-disable-next-line
     }, [context.user, context.token]);
 
     if (!loaded) {

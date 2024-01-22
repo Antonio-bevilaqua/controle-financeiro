@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import UserDropdown from './UserDropdown/UserDropdown'
 import NavbarItem from './NavbarItem/NavbarItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCalculator, faCircleInfo, faHandHoldingDollar } from '@fortawesome/free-solid-svg-icons'
 import { menu } from "./data/menu";
 import MobileMenu from './MobileMenu/MobileMenu'
 
