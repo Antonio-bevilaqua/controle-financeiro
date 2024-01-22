@@ -23,8 +23,8 @@ const Menu = ({ open, className, data }) => {
             </span>
 
             <ul className="flex flex-col border-t-2 gap-2 border-gray-200 pt-2 mt-2">
-                {data.map((item) => (
-                    <li className='list-none'>
+                {data.map((item, idx) => (
+                    <li className='list-none' key={`menu-data-${idx}`}>
                         <Link to={item.href} className="flex transition-all border-l-4 px-3 border-purple-800 text-gray-100 hover:text-fuchsia-400 hover:border-fuchsia-400">
                             <span className='w-6'>
                                 <FontAwesomeIcon icon={item.icon} />

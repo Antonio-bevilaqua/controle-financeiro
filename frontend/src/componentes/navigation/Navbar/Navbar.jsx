@@ -34,15 +34,15 @@ const Navbar = () => {
                             <ApplicationLogo className="flex items-center" imgClassName='w-12 h-12' />
                         </Link>
                         <ul className="flex flex-1 h-full ml-10">
-                            {menu.map((item) => (
-                                <NavbarItem className={breakpointClasses.desktop[mobileBreakpoint]} to={item.href}>
+                            {menu.map((item, idx) => (
+                                <NavbarItem className={breakpointClasses.desktop[mobileBreakpoint]} to={item.href} key={`desktop_menu_${idx}`} >
                                     <FontAwesomeIcon icon={item.icon} className="mr-2 text-lg" /> {item.name}
                                 </NavbarItem>
                             ))}
                         </ul>
                         <div className="relative">
                             <UserDropdown.Button className={breakpointClasses.desktop[mobileBreakpoint]} />
-                            <MobileMenu.Button className={breakpointClasses.mobile[mobileBreakpoint]}  />
+                            <MobileMenu.Button className={breakpointClasses.mobile[mobileBreakpoint]} />
                         </div>
                         <UserDropdown.Menu className={breakpointClasses.desktop[mobileBreakpoint] + " top-16 right-0"} />
                     </div>
