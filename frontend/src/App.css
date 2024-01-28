@@ -8,6 +8,14 @@
     box-sizing: border-box;
 }
 
+:root {
+    --color01: #F0E7ED;/*Branco*/
+    --color02: #EEC7CE;/*Rosa Claro*/
+    --color03: #461A15;/*Vinho*/
+    --color04: #6B475D;/*Violeta*/
+    --color05: #180D0E;/*Preto*/
+}
+
 html,
 body {
     width: 100vw;
